@@ -28,7 +28,7 @@ func main() {
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		proto.RegisterUserServer(grpcServer, server.NewUserServer(ctx))
 
-		if c.Mode == service.DevMode || c.Mode == service.TestMode {
+		if c.RpcServerConf.Mode == service.DevMode || c.RpcServerConf.Mode == service.TestMode {
 			reflection.Register(grpcServer)
 		}
 	})

@@ -7,7 +7,7 @@ import (
 	"github.com/reation/home_user_service/internal/svc"
 	"github.com/reation/home_user_service/proto/types/proto"
 
-	"github.com/reation/home_order_service/order"
+	order_service "github.com/reation/home_order_service/order"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -27,7 +27,7 @@ func NewGetUserOrderListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 
 func (l *GetUserOrderListLogic) GetUserOrderList(in *proto.IdRequest) (*proto.UserOrderList, error) {
 	// todo: add your logic here and delete this line
-	order, err := l.svcCtx.OrderRpc.GetOrderListByUid(l.ctx, &order.UserId{
+	order, err := l.svcCtx.OrderRpc.GetOrderListByUid(l.ctx, &order_service.UserId{
 		Uid: 789,
 	})
 
@@ -40,19 +40,26 @@ func (l *GetUserOrderListLogic) GetUserOrderList(in *proto.IdRequest) (*proto.Us
 	}
 
 	var result proto.UserOrderList
-	for k,_ := range order.OrderList {
-		result.OrderList[k].Id = order.OrderList[k].Id
-		result.OrderList[k].Oid = order.OrderList[k].Oid
-		result.OrderList[k].Uid = order.OrderList[k].Uid
-		result.OrderList[k].Gid = order.OrderList[k].Gid
-		result.OrderList[k].Price = order.OrderList[k].Price
-	}
+	var orderInfo proto.OrderInfo
+	orderList := make(map[int64]*proto.OrderInfo)
+	orderInfo.Id = 7
+	orderInfo.Oid = 73811
+	orderInfo.Uid = 44433
+	orderInfo.Gid = 663098
+	orderInfo.Price = 574.39
+	orderList[0] = &orderInfo
 
+	orderInfo.Id = 17
+	orderInfo.Oid = 733441
+	orderInfo.Uid = 311222
+	orderInfo.Gid = 33098
+	orderInfo.Price = 99.99
+	orderList[1] = &orderInfo
 
-	return &proto.UserOrderList{
-		Id: in.Id,
-		Name: "reation",
-		Gender: 0,
-		OrderList: result.OrderList,
-	}, nil
+	result.Id = 488
+	result.Name = "reation"
+	result.Gender = 0
+	result.OrderList = orderList
+
+	return &result, nil
 }
