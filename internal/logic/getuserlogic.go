@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 
-	"user_service/internal/svc"
-	"user_service/proto/types/proto"
+	"home_user_service/internal/svc"
+	"home_user_service/proto/types/proto"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,8 +27,8 @@ func (l *GetUserLogic) GetUser(in *proto.IdRequest) (*proto.UserInfoResponse, er
 	// todo: add your logic here and delete this line
 
 	return &proto.UserInfoResponse{
-		Id: 1,
-		Name: "reation",
-		Gender: 1,
+		Id:     7,
+		Name:   "reation",
+		Gender: 0,
 	}, nil
 }

@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"user_service/internal/logic"
-	"user_service/internal/svc"
-	"user_service/proto/types/proto"
+	"home_user_service/internal/logic"
+	"home_user_service/internal/svc"
+	"home_user_service/proto/types/proto"
 )
 
 type UserServer struct {

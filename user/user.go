@@ -6,7 +6,7 @@ package user
 import (
 	"context"
 
-	"user_service/proto/types/proto"
+	"home_user_service/proto/types/proto"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
