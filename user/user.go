@@ -13,11 +13,15 @@ import (
 )
 
 type (
+	Id               = proto.Id
 	IdRequest        = proto.IdRequest
+	OrderInfo        = proto.OrderInfo
 	UserInfoResponse = proto.UserInfoResponse
+	UserOrderList    = proto.UserOrderList
 
 	User interface {
 		GetUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
+		GetUserOrderList(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserOrderList, error)
 	}
 
 	defaultUser struct {
@@ -34,4 +38,9 @@ func NewUser(cli zrpc.Client) User {
 func (m *defaultUser) GetUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
 	client := proto.NewUserClient(m.cli.Conn())
 	return client.GetUser(ctx, in, opts...)
+}
+
+func (m *defaultUser) GetUserOrderList(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserOrderList, error) {
+	client := proto.NewUserClient(m.cli.Conn())
+	return client.GetUserOrderList(ctx, in, opts...)
 }

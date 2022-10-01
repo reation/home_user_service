@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
 	GetUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
+	GetUserOrderList(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserOrderList, error)
 }
 
 type userClient struct {
@@ -42,11 +43,21 @@ func (c *userClient) GetUser(ctx context.Context, in *IdRequest, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *userClient) GetUserOrderList(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserOrderList, error) {
+	out := new(UserOrderList)
+	err := c.cc.Invoke(ctx, "/user.User/getUserOrderList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
 	GetUser(context.Context, *IdRequest) (*UserInfoResponse, error)
+	GetUserOrderList(context.Context, *IdRequest) (*UserOrderList, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedUserServer struct {
 
 func (UnimplementedUserServer) GetUser(context.Context, *IdRequest) (*UserInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedUserServer) GetUserOrderList(context.Context, *IdRequest) (*UserOrderList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserOrderList not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -88,6 +102,24 @@ func _User_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserOrderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserOrderList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.User/getUserOrderList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserOrderList(ctx, req.(*IdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getUser",
 			Handler:    _User_GetUser_Handler,
+		},
+		{
+			MethodName: "getUserOrderList",
+			Handler:    _User_GetUserOrderList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

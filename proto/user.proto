@@ -8,6 +8,25 @@ message IdRequest {
     int64 id = 1;
 }
 
+message Id {
+    int64 id = 1;
+}
+
+message OrderInfo {
+    int64 id = 1;
+    int64 oid = 2;
+    int64 uid = 3;
+    int64 gid = 4;
+    float price = 5;
+}
+
+message UserOrderList {
+    int64 id = 1;
+    string name = 2;
+    int64 gender = 3;
+    map<int64,OrderInfo> order_list = 4;
+}
+
 message UserInfoResponse {
     int64 id = 1;
 
@@ -18,4 +37,5 @@ message UserInfoResponse {
 
 service User {
     rpc getUser(IdRequest) returns (UserInfoResponse);
+    rpc getUserOrderList(IdRequest) returns (UserOrderList);
 }

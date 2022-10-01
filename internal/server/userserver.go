@@ -26,3 +26,8 @@ func (s *UserServer) GetUser(ctx context.Context, in *proto.IdRequest) (*proto.U
 	l := logic.NewGetUserLogic(ctx, s.svcCtx)
 	return l.GetUser(in)
 }
+
+func (s *UserServer) GetUserOrderList(ctx context.Context, in *proto.IdRequest) (*proto.UserOrderList, error) {
+	l := logic.NewGetUserOrderListLogic(ctx, s.svcCtx)
+	return l.GetUserOrderList(in)
+}
