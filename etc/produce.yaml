@@ -1,0 +1,12 @@
+Name: user.rpc
+ListenOn: 127.0.0.1:8081
+Port: 8081
+Etcd:
+  Hosts:
+  - 49.233.55.149:2379
+  Key: user.rpc
+OrderRpc:
+  Etcd:
+    Hosts:
+      - 49.233.55.149:2379
+    Key: order.rpc
