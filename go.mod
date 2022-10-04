@@ -3,6 +3,7 @@ module github.com/reation/home_user_service
 go 1.19
 
 require (
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/zeromicro/go-zero v1.4.1
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
