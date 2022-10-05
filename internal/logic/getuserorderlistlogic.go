@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"errors"
+	"time"
 
 	"github.com/reation/home_user_service/internal/svc"
 	"github.com/reation/home_user_service/proto/types/proto"
@@ -39,26 +40,37 @@ func (l *GetUserOrderListLogic) GetUserOrderList(in *proto.IdRequest) (*proto.Us
 		return nil, errors.New("用户没用订单")
 	}
 
+	l.svcCtx.RedisModel.Set(l.ctx, "babalili", "value333", 4*time.Hour).Err()
+
+	userInfo, err := l.svcCtx.UserInfoModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	if userInfo.Name == "" {
+		return nil, errors.New("没有此用户")
+	}
+
 	var result proto.UserOrderList
 	var orderInfo proto.OrderInfo
 	orderList := make(map[int64]*proto.OrderInfo)
 	orderInfo.Id = 7
 	orderInfo.Oid = 73811
-	orderInfo.Uid = 44433
+	orderInfo.Uid = userInfo.Id
 	orderInfo.Gid = 663098
 	orderInfo.Price = 574.39
 	orderList[0] = &orderInfo
 
 	orderInfo.Id = 17
 	orderInfo.Oid = 733441
-	orderInfo.Uid = 311222
+	orderInfo.Uid = userInfo.Id
 	orderInfo.Gid = 33098
 	orderInfo.Price = 99.99
 	orderList[1] = &orderInfo
 
-	result.Id = 488
-	result.Name = "reation"
-	result.Gender = 0
+	result.Id = userInfo.Id
+	result.Name = userInfo.Name
+	result.Gender = userInfo.Gender
 	result.OrderList = orderList
 
 	return &result, nil

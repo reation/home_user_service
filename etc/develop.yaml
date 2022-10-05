@@ -3,10 +3,16 @@ ListenOn: 127.0.0.1:8081
 Port: 8081
 Mysql:
   UserData:
+    DataSourceName: root:19861029@(152.136.253.191:3306)/<database_name>?charset=utf8&parseTime=true
     User: root
     Passwd: 19861029
     Addr: 152.136.253.191:3306
     DBName: user
+Redis:
+  Host:
+    - 49.233.55.149:8001
+  Pass : 19861029
+  Type : cluster
 Etcd:
   Hosts:
   - 127.0.0.1:2379

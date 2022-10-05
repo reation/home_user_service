@@ -3,13 +3,13 @@ module github.com/reation/home_user_service
 go 1.19
 
 require (
-	github.com/go-sql-driver/mysql v1.6.0
 	github.com/zeromicro/go-zero v1.4.1
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
 )
 
 require (
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 )
